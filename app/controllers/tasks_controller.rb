@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   def index
     # render html: "This is index action of Tasks controller"
 
-    # @tasks = Task.all
+    @tasks = Task.all
     # respond_to do |format|
     #   format.html
     #   format.xml { render xml: @tasks }
