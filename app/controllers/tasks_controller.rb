@@ -26,7 +26,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    render status: :ok, json: { task: @task, assigned_user: @task.user }
+    # render status: :ok, json: { task: @task, assigned_user: @task.user }
   end
 
   def update
