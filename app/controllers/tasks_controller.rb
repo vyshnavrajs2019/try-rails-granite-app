@@ -33,6 +33,7 @@ class TasksController < ApplicationController
   def show
     authorize @task
     # render status: :ok, json: { task: @task, assigned_user: @task.user }
+    @comments = @task.comments.order("created_at DESC")
     @task_creator = User.find(@task.creator_id).name
   end
 
