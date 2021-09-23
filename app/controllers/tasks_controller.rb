@@ -3,11 +3,15 @@
 class TasksController < ApplicationController
   before_action :authenticate_user_using_x_auth_token
   before_action :load_task, only: [:show, :update, :destroy]
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
 
   def index
     # render html: "This is index action of Tasks controller"
 
-    tasks = Task.all
+    # tasks = Task.all
+    # @tasks = TaskPolicy::Scope.new(current_user, Task).resolve
+    tasks = policy_scope(Task)
     render status: :ok, json: { tasks: tasks }
     # respond_to do |format|
     #   format.html
@@ -27,11 +31,13 @@ class TasksController < ApplicationController
   end
 
   def show
+    authorize @task
     # render status: :ok, json: { task: @task, assigned_user: @task.user }
     @task_creator = User.find(@task.creator_id).name
   end
 
   def update
+    authorize @task
     if @task && @task.update(task_params)
       render status: :ok, json: { notice: "Successfully updated task." }
     else
@@ -41,6 +47,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    authorize @task
     if @task.destroy
       render status: :ok, json: { notice: "Successfully deleted task." }
     else

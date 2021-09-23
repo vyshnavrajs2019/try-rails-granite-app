@@ -56,3 +56,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "react-rails"
 gem "bcrypt", "~> 3.1.13"
+gem "pundit"
